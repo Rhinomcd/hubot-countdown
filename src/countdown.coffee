@@ -15,6 +15,14 @@
 #   Ryan McDonough <rmcdono@transunion.com>
 
 module.exports = (robot) ->
-  robot.respond /countdown (.*)/i, (res) ->
+  robot.respond /countdown (\d+)/i, (res) ->
     countdownDuration =  res.match[1]
     res.reply "there are #{countdownDuration} seconds remaining!"
+
+  robot.respond /countdown help/i, (res) ->
+    countdownDuration =  res.match[1]
+    helpMessages =
+      ['countdown <seconds> - Sets a timer for <seconds>',
+       'countdown <name> <seconds> - Sets a timer with <name> for <seconds>']
+    for message in helpMessages
+      res.send message
