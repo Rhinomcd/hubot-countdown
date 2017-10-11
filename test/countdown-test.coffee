@@ -12,16 +12,16 @@ describe 'countdown', ->
   afterEach ->
     @room.destroy()
 
-  it 'responds to hello', ->
-    @room.user.say('alice', '@hubot hello').then =>
+  it 'responds to countdown', ->
+    @room.user.say('alice', '@hubot countdown 60').then =>
       expect(@room.messages).to.eql [
-        ['alice', '@hubot hello']
-        ['hubot', '@alice hello!']
+        ['alice', '@hubot countdown 60']
+        ['hubot', '@alice there are 60 seconds remaining!']
       ]
 
-  it 'hears orly', ->
-    @room.user.say('bob', 'just wanted to say orly').then =>
+  it 'responds to COUNTDOWN', ->
+    @room.user.say('alice', '@hubot COUNTDOWN 60').then =>
       expect(@room.messages).to.eql [
-        ['bob', 'just wanted to say orly']
-        ['hubot', 'yarly']
+        ['alice', '@hubot COUNTDOWN 60']
+        ['hubot', '@alice there are 60 seconds remaining!']
       ]

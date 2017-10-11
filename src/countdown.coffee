@@ -15,8 +15,6 @@
 #   Ryan McDonough <rmcdono@transunion.com>
 
 module.exports = (robot) ->
-  robot.respond /hello/, (res) ->
-    res.reply "hello!"
-
-  robot.hear /orly/, (res) ->
-    res.send "yarly"
+  robot.respond /countdown (.*)/i, (res) ->
+    countdownDuration =  res.match[1]
+    res.reply "there are #{countdownDuration} seconds remaining!"
