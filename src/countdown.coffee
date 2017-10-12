@@ -28,3 +28,14 @@ module.exports = (robot) ->
     ]
     for message in helpMessages
       res.send message
+
+  robot.respond /countdown (\w+) (\d+)/i, (res) ->
+    eventName = res.match[1]
+    eventTime =  res.match[2]
+    robot.brain.set eventName, eventTime
+    res.reply "Got it! #{eventName} will begin in: #{eventTime}"
+
+  robot.respond /countdown get (\w+)/, (res) ->
+    eventName = res.match[1]
+    eventTime = robot.brain.get eventName
+    res.reply "Looks like #{eventName} starts at #{eventTime}"
