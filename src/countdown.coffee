@@ -5,8 +5,9 @@
 #   LIST_OF_ENV_VARS_TO_SET
 #
 # Commands:
-#   hubot hello - <what the respond trigger does>
-#   orly - <what the hear trigger does>
+#   hubot countdown <seconds> - Sets a timer for <seconds>'
+#   hubot countdown <name> <seconds> - Sets a timer with <name> for <seconds>'
+#
 #
 # Notes:
 #   <optional notes required for the script>
@@ -21,8 +22,9 @@ module.exports = (robot) ->
 
   robot.respond /countdown help/i, (res) ->
     countdownDuration =  res.match[1]
-    helpMessages =
-      ['countdown <seconds> - Sets a timer for <seconds>',
-       'countdown <name> <seconds> - Sets a timer with <name> for <seconds>']
+    helpMessages = [
+      'countdown <seconds> - Sets a timer for <seconds>'
+      'countdown <name> <seconds> - Sets a timer with <name> for <seconds>'
+    ]
     for message in helpMessages
       res.send message
