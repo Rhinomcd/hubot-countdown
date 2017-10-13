@@ -77,10 +77,8 @@ module.exports = (robot) ->
     else
       res.reply "I couldn't find an event named #{eventName}"
 
-  cron.scheduleJob('* * * * *', () ->
-    console.log(robot.brain)
-  )
-  console.log('job scheduled')
-
+      # TODO: eventupdater (cancel jobs after event start, update cron to tick every 15 sub 1hr)
+      # TODO: restrict permissions
+      # TODO: emoji mode
 class Event
   constructor: (@name, @time, @cron) ->
