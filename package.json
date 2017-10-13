@@ -12,7 +12,10 @@
   "bugs": {
     "url": "https://github.com/hubot-scripts/hubot-countdown/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "moment": "^2.19.1",
+    "node-schedule": "^1.2.5"
+  },
   "peerDependencies": {
     "hubot": "2.x"
   },

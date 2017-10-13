@@ -30,6 +30,6 @@ describe 'countdown', ->
     @room.user.say('alice', '@hubot countdown help').then =>
       expect(@room.messages).to.eql [
         ['alice', '@hubot countdown help']
-        ['hubot', 'countdown <seconds> - Sets a timer for <seconds>']
-        ['hubot', 'countdown <name> <seconds> - Sets a timer with <name> for <seconds>']
+        ['hubot', 'countdown set <name> <Time HHmm> - sets a countdown for an Event']
+        ['hubot', 'countdown get <eventName> - gets the start time for an Event']
       ]
