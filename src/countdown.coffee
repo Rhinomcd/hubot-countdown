@@ -24,6 +24,9 @@ module.exports = (robot) ->
     res.reply "there are #{countdownDuration} seconds remaining!"
 
   robot.respond /countdown help/i, (res) ->
+    user = robot.brain.userForName(res.message.user.name)
+    unless robot.auth.hasRole(user, 'transunion')
+      return
     countdownDuration =  res.match[1]
     helpMessages = [
       'countdown set <name> <Time HHmm> - sets a countdown for an Event'
@@ -33,6 +36,9 @@ module.exports = (robot) ->
       res.send message
 
   robot.respond /countdown set (\w+) (\d{4})/i, (res) ->
+    user = robot.brain.userForName(res.message.user.name)
+    unless robot.auth.hasRole(user, 'transunion')
+      return
     eventName = res.match[1]
     eventTime = moment(res.match[2],'HHmm')
     rule = new cron.RecurrenceRule()
@@ -48,6 +54,9 @@ module.exports = (robot) ->
     res.reply "Got it! #{eventName} will begin at #{eventTime.format('h:mmA')}!"
 
   robot.respond /countdown get (\w+)/, (res) ->
+    user = robot.brain.userForName(res.message.user.name)
+    unless robot.auth.hasRole(user, 'transunion')
+      return
     eventName = res.match[1]
     event = robot.brain.get(eventName)
     console.log(event)
@@ -58,6 +67,9 @@ module.exports = (robot) ->
       res.reply "I couldn't find an event named #{eventName}"
 
   robot.respond /countdown change (\w+) (\d{4})/, (res) ->
+    user = robot.brain.userForName(res.message.user.name)
+    unless robot.auth.hasRole(user, 'transunion')
+      return
     eventName = res.match[1]
     eventTime = moment(res.match[2],'HHmm')
     event = robot.brain.get(eventName)
@@ -68,6 +80,9 @@ module.exports = (robot) ->
     res.reply "Got it! #{eventName} has been updated to start at #{eventTime.format('h:mmA')}"
 
   robot.respond /countdown remove (\w+)/, (res) ->
+    user = robot.brain.userForName(res.message.user.name)
+    unless robot.auth.hasRole(user, 'transunion')
+      return
     eventName = res.match[1]
     event = robot.brain.get(eventName)
     if event?
@@ -77,8 +92,18 @@ module.exports = (robot) ->
     else
       res.reply "I couldn't find an event named #{eventName}"
 
-      # TODO: eventupdater (cancel jobs after event start, update cron to tick every 15 sub 1hr)
-      # TODO: restrict permissions
-      # TODO: emoji mode
+  robot.respond /announce (\S+) (.+)/i, (res) ->
+    user = robot.brain.userForName(res.message.user.name)
+    unless robot.auth.hasRole(user, 'transunion')
+      return
+    room = res.match[1]
+    message = res.match[2]
+    console.log(room, message)
+    robot.messageRoom "##{room}", "#{message}"
+
+
+  # TODO: eventupdater (cancel jobs after event start, update cron to tick every 15 sub 1hr)
+  # TODO: restrict permissions
+  # TODO: emoji mode
 class Event
   constructor: (@name, @time, @cron) ->
